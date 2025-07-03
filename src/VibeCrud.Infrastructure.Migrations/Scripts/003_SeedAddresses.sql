@@ -2,7 +2,7 @@
 INSERT INTO [dbo].[Addresses] (
     [FirstName], [LastName], [Street], [HouseNumber], [ZipCode], [City], [Country], [Email], [Phone], [CreatedAt], [UpdatedAt], [IsDeleted]
 ) VALUES
-    ('Max', 'Mustermann', 'Musterstraﬂe', '1', '12345', 'Musterstadt', 'Deutschland', 'X_1_max@example.com', '+491234567890', GETUTCDATE(), NULL, 0),
+    ('Max', 'Mustermann', 'Musterstra√üe', '1', '12345', 'Musterstadt', 'Deutschland', 'X_1_max@example.com', '+491234567890', GETUTCDATE(), NULL, 0),
     ('Erika', 'Musterfrau', 'Beispielweg', '2A', '54321', 'Beispielstadt', 'Deutschland', 'X_2_erika@example.com', '+491234567891', GETUTCDATE(), NULL, 0),
     ('John', 'Doe', 'Main Street', '100', '10001', 'New York', 'USA', 'X_3_john.doe@example.com', '+11234567890', GETUTCDATE(), NULL, 0),
     ('Jane', 'Smith', 'Second Ave', '200B', '90001', 'Los Angeles', 'USA', 'X_4_jane.smith@example.com', '+11234567891', GETUTCDATE(), NULL, 0),
