@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\VibeCrud.Domain\VibeCrud.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
