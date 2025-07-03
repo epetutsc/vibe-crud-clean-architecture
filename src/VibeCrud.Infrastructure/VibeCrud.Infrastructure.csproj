@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VibeCrud.Infrastructure.SqlServer\VibeCrud.Infrastructure.SqlServer.csproj" />
     <ProjectReference Include="..\VibeCrud.Infrastructure.Messaging\VibeCrud.Infrastructure.Messaging.csproj" />
+    <ProjectReference Include="..\VibeCrud.Infrastructure.Migrations\VibeCrud.Infrastructure.Migrations.csproj" />
   </ItemGroup>
 
   <ItemGroup>

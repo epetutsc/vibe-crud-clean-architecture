@@ -1,6 +1,7 @@
 using VibeCrud.Web.Components;
 using VibeCrud.Infrastructure;
 using VibeCrud.Application.Services;
+using VibeCrud.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,26 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<IAddressService, AddressService>();
 
 var app = builder.Build();
+
+// Run database migrations
+using (var scope = app.Services.CreateScope())
+{
+    var migrationRunner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    
+    if (!string.IsNullOrEmpty(connectionString))
+    {
+        var migrationSuccess = await migrationRunner.RunMigrationsAsync(connectionString);
+        if (!migrationSuccess)
+        {
+            app.Logger.LogError("Database migrations failed. Application may not function correctly.");
+        }
+    }
+    else
+    {
+        app.Logger.LogWarning("No connection string found. Skipping database migrations.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

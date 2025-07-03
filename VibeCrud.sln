@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCrud.Infrastructure.Sql
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCrud.Infrastructure.Messaging", "src\VibeCrud.Infrastructure.Messaging\VibeCrud.Infrastructure.Messaging.csproj", "{9EF04FAD-C999-425F-AF52-F10633C27B64}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCrud.Infrastructure.Migrations", "src\VibeCrud.Infrastructure.Migrations\VibeCrud.Infrastructure.Migrations.csproj", "{2A5E8D7F-1B3C-4E9A-8F2D-6C4A9E5B7D8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{9EF04FAD-C999-425F-AF52-F10633C27B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EF04FAD-C999-425F-AF52-F10633C27B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EF04FAD-C999-425F-AF52-F10633C27B64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A5E8D7F-1B3C-4E9A-8F2D-6C4A9E5B7D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A5E8D7F-1B3C-4E9A-8F2D-6C4A9E5B7D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A5E8D7F-1B3C-4E9A-8F2D-6C4A9E5B7D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A5E8D7F-1B3C-4E9A-8F2D-6C4A9E5B7D8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A7725474-6324-425B-94F7-60FFDEA9B916} = {76115369-0A03-4D0E-9D5B-932C2315FEB2}
@@ -88,5 +94,6 @@ Global
 		{615C07F7-C960-4E2B-AB22-6C7F8D331831} = {3F62FA4E-464E-4316-B065-A82C003183D1}
 		{1F5490BC-E8DD-464A-8433-F3FEA33E1634} = {76115369-0A03-4D0E-9D5B-932C2315FEB2}
 		{9EF04FAD-C999-425F-AF52-F10633C27B64} = {76115369-0A03-4D0E-9D5B-932C2315FEB2}
+		{2A5E8D7F-1B3C-4E9A-8F2D-6C4A9E5B7D8F} = {76115369-0A03-4D0E-9D5B-932C2315FEB2}
 	EndGlobalSection
 EndGlobal
