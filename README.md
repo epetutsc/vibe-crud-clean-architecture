@@ -60,6 +60,13 @@ This project demonstrates a complete Clean Architecture implementation for manag
 - **In-Memory Event Bus**: Domain event handling
 - **Repository Pattern**: Data access abstraction
 - **Dependency Injection**: Built-in DI container
+- **.NET Aspire**: Cloud-native orchestration and development
+
+### Development & Orchestration
+- **.NET Aspire**: Local development orchestration
+- **Docker**: Containerization and SQL Server hosting
+- **OpenTelemetry**: Distributed tracing and monitoring
+- **Health Checks**: Built-in application health monitoring
 
 ## Features
 
@@ -92,7 +99,9 @@ VibeCrud/
 │   ├── VibeCrud.Domain/           # Core business logic and entities
 │   ├── VibeCrud.Application/      # Use cases and services
 │   ├── VibeCrud.Infrastructure/   # Data access and external services
-│   └── VibeCrud.Web/             # Blazor Server web application
+│   ├── VibeCrud.Web/             # Blazor Server web application
+│   ├── VibeCrud.AppHost/         # .NET Aspire orchestration host
+│   └── VibeCrud.ServiceDefaults/ # Shared Aspire service configuration
 ├── tests/
 │   ├── VibeCrud.Domain.Tests/     # Domain layer unit tests
 │   ├── VibeCrud.Application.Tests/ # Application layer unit tests
@@ -105,8 +114,9 @@ VibeCrud/
 
 ### Prerequisites
 - **.NET 8 SDK**
-- **SQL Server** or **SQL Server LocalDB**
-- **Docker** (for integration tests)
+- **SQL Server** or **SQL Server LocalDB** (for standalone development)
+- **Docker** (for integration tests and Aspire orchestration)
+- **.NET Aspire workload** (for simplified local development)
 
 ### Installation
 
@@ -116,28 +126,60 @@ VibeCrud/
    cd vibe-crud-clean-architecture
    ```
 
-2. **Restore packages**
+2. **Install .NET Aspire workload (recommended for local development)**
    ```bash
+   dotnet workload install aspire
+   ```
+
+3. **Choose your development approach:**
+
+   **Option A: Using .NET Aspire (Recommended)**
+   ```bash
+   # Run the application with full orchestration (SQL Server in Docker + Web App)
+   dotnet run --project src/VibeCrud.AppHost
+   ```
+   This will:
+   - Start SQL Server in a Docker container
+   - Automatically configure connection strings
+   - Run database migrations
+   - Start the web application
+   - Provide a dashboard at http://localhost:15000
+
+   **Option B: Traditional development**
+   ```bash
+   # Restore packages
    dotnet restore
-   ```
-
-3. **Update connection string** (optional)
-   Edit `src/VibeCrud.Web/appsettings.json` if needed:
-   ```json
-   {
-     "ConnectionStrings": {
-       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=VibeCrudDb;Trusted_Connection=true;MultipleActiveResultSets=true"
-     }
-   }
-   ```
-
-4. **Run the application**
-   ```bash
+   
+   # Update connection string if needed in src/VibeCrud.Web/appsettings.json
+   
+   # Run the application (requires SQL Server/LocalDB)
    dotnet run --project src/VibeCrud.Web
    ```
 
-5. **Navigate to the application**
-   Open https://localhost:5001 in your browser
+### Running with .NET Aspire
+
+.NET Aspire provides a streamlined local development experience:
+
+1. **Start the orchestration**:
+   ```bash
+   dotnet run --project src/VibeCrud.AppHost
+   ```
+
+2. **Access the Aspire dashboard** at `http://localhost:15000` to:
+   - Monitor application health and logs
+   - View database connection status
+   - Access the web application
+   - Monitor telemetry and traces
+
+3. **The web application** will be available through the dashboard or directly at the port shown in the Aspire dashboard
+
+### Benefits of Aspire Orchestration
+
+- **No local SQL Server setup required** - Uses containerized SQL Server
+- **Automatic service discovery** - Components find each other automatically
+- **Unified logging and monitoring** - All application logs in one place
+- **Health checks** - Built-in health monitoring for all services
+- **Easy debugging** - Integrated development experience
 
 ### Running Tests
 
