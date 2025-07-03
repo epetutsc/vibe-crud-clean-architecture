@@ -1,10 +1,18 @@
 using VibeCrud.Web.Components;
+using VibeCrud.Infrastructure;
+using VibeCrud.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Add Infrastructure services
+builder.Services.AddInfrastructure(builder.Configuration);
+
+// Add Application services
+builder.Services.AddScoped<IAddressService, AddressService>();
 
 var app = builder.Build();
 
