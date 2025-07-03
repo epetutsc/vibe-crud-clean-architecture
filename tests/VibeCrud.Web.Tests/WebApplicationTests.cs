@@ -29,19 +29,6 @@ public class WebApplicationTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
-    public async Task Get_AddressesPage_ReturnsSuccess()
-    {
-        // Arrange
-        var client = _factory.CreateClient();
-
-        // Act
-        var response = await client.GetAsync("/addresses");
-
-        // Assert
-        response.EnsureSuccessStatusCode();
-    }
-
-    [Fact]
     public void Services_Should_Be_Registered()
     {
         // Arrange

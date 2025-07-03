@@ -33,3 +33,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
+
+// Make the Program class public for testing
+public partial class Program { }
