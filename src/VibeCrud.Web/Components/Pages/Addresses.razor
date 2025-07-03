@@ -1,0 +1,335 @@
+@page "/addresses"
+@rendermode InteractiveServer
+@using VibeCrud.Application.DTOs
+@using VibeCrud.Application.Services
+@using VibeCrud.Web.Components.Common
+@inject IAddressService AddressService
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Address Management</PageTitle>
+
+<h1>Address Management</h1>
+
+<AddressGrid Addresses="@addresses"
+            CurrentPage="@currentPage"
+            PageSize="@pageSize"
+            TotalItems="@totalItems"
+            SortBy="@sortBy"
+            SortDirection="@sortDirection"
+            FilterValue="@filterValue"
+            IsLoading="@isLoading"
+            OnPageChanged="OnPageChanged"
+            OnPageSizeChanged="OnPageSizeChanged"
+            OnSortChanged="OnSortChanged"
+            OnFilterChanged="OnFilterChanged"
+            OnAddClicked="OnAddAddress"
+            OnEditClicked="OnEditAddress"
+            OnDeleteClicked="OnDeleteAddress" />
+
+@if (showAddEditModal)
+{
+    <div class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@(isEditing ? "Edit Address" : "Add New Address")</h5>
+                    <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@currentAddress" OnValidSubmit="SaveAddress">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary class="text-danger" />
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="firstName" class="form-label">First Name</label>
+                                    <InputText id="firstName" class="form-control" @bind-Value="currentAddress.FirstName" />
+                                    <ValidationMessage For="@(() => currentAddress.FirstName)" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="lastName" class="form-label">Last Name</label>
+                                    <InputText id="lastName" class="form-control" @bind-Value="currentAddress.LastName" />
+                                    <ValidationMessage For="@(() => currentAddress.LastName)" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label for="street" class="form-label">Street</label>
+                                    <InputText id="street" class="form-control" @bind-Value="currentAddress.Street" />
+                                    <ValidationMessage For="@(() => currentAddress.Street)" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="houseNumber" class="form-label">House Number</label>
+                                    <InputText id="houseNumber" class="form-control" @bind-Value="currentAddress.HouseNumber" />
+                                    <ValidationMessage For="@(() => currentAddress.HouseNumber)" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="zipCode" class="form-label">Zip Code</label>
+                                    <InputText id="zipCode" class="form-control" @bind-Value="currentAddress.ZipCode" />
+                                    <ValidationMessage For="@(() => currentAddress.ZipCode)" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="city" class="form-label">City</label>
+                                    <InputText id="city" class="form-control" @bind-Value="currentAddress.City" />
+                                    <ValidationMessage For="@(() => currentAddress.City)" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label for="country" class="form-label">Country</label>
+                                    <InputText id="country" class="form-control" @bind-Value="currentAddress.Country" />
+                                    <ValidationMessage For="@(() => currentAddress.Country)" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <InputText id="email" class="form-control" @bind-Value="currentAddress.Email" />
+                                    <ValidationMessage For="@(() => currentAddress.Email)" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <InputText id="phone" class="form-control" @bind-Value="currentAddress.Phone" />
+                                    <ValidationMessage For="@(() => currentAddress.Phone)" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" disabled="@isSaving">
+                                @if (isSaving)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2"></span>
+                                }
+                                @(isEditing ? "Update" : "Create")
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private IEnumerable<AddressDto> addresses = new List<AddressDto>();
+    private int currentPage = 1;
+    private int pageSize = 10;
+    private int totalItems = 0;
+    private string sortBy = string.Empty;
+    private string sortDirection = "asc";
+    private string filterValue = string.Empty;
+    private bool isLoading = false;
+    
+    private bool showAddEditModal = false;
+    private bool isEditing = false;
+    private bool isSaving = false;
+    private AddressFormDto currentAddress = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAddresses();
+    }
+
+    private async Task LoadAddresses()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            var query = new AddressQueryDto
+            {
+                Page = currentPage,
+                PageSize = pageSize,
+                SortBy = sortBy,
+                SortDirection = sortDirection,
+                Filter = filterValue
+            };
+
+            var result = await AddressService.GetPagedAsync(query);
+            addresses = result.Items;
+            totalItems = result.TotalCount;
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error loading addresses: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnPageChanged(int page)
+    {
+        currentPage = page;
+        await LoadAddresses();
+    }
+
+    private async Task OnPageSizeChanged(int newPageSize)
+    {
+        pageSize = newPageSize;
+        currentPage = 1;
+        await LoadAddresses();
+    }
+
+    private async Task OnSortChanged((string SortBy, string SortDirection) sortInfo)
+    {
+        sortBy = sortInfo.SortBy;
+        sortDirection = sortInfo.SortDirection;
+        currentPage = 1;
+        await LoadAddresses();
+    }
+
+    private async Task OnFilterChanged(string filter)
+    {
+        filterValue = filter;
+        currentPage = 1;
+        await LoadAddresses();
+    }
+
+    private void OnAddAddress()
+    {
+        currentAddress = new AddressFormDto();
+        isEditing = false;
+        showAddEditModal = true;
+    }
+
+    private void OnEditAddress(AddressDto address)
+    {
+        currentAddress = new AddressFormDto
+        {
+            Id = address.Id,
+            FirstName = address.FirstName,
+            LastName = address.LastName,
+            Street = address.Street,
+            HouseNumber = address.HouseNumber,
+            ZipCode = address.ZipCode,
+            City = address.City,
+            Country = address.Country,
+            Email = address.Email,
+            Phone = address.Phone
+        };
+        isEditing = true;
+        showAddEditModal = true;
+    }
+
+    private async Task OnDeleteAddress(AddressDto address)
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {address.FullName}?"))
+        {
+            try
+            {
+                await AddressService.DeleteAsync(address.Id);
+                await LoadAddresses();
+                await JSRuntime.InvokeVoidAsync("alert", "Address deleted successfully!");
+            }
+            catch (Exception ex)
+            {
+                await JSRuntime.InvokeVoidAsync("alert", $"Error deleting address: {ex.Message}");
+            }
+        }
+    }
+
+    private async Task SaveAddress()
+    {
+        isSaving = true;
+        StateHasChanged();
+
+        try
+        {
+            if (isEditing)
+            {
+                var updateDto = new UpdateAddressDto
+                {
+                    Id = currentAddress.Id,
+                    FirstName = currentAddress.FirstName,
+                    LastName = currentAddress.LastName,
+                    Street = currentAddress.Street,
+                    HouseNumber = currentAddress.HouseNumber,
+                    ZipCode = currentAddress.ZipCode,
+                    City = currentAddress.City,
+                    Country = currentAddress.Country,
+                    Email = currentAddress.Email,
+                    Phone = currentAddress.Phone
+                };
+                await AddressService.UpdateAsync(updateDto);
+                await JSRuntime.InvokeVoidAsync("alert", "Address updated successfully!");
+            }
+            else
+            {
+                var createDto = new CreateAddressDto
+                {
+                    FirstName = currentAddress.FirstName,
+                    LastName = currentAddress.LastName,
+                    Street = currentAddress.Street,
+                    HouseNumber = currentAddress.HouseNumber,
+                    ZipCode = currentAddress.ZipCode,
+                    City = currentAddress.City,
+                    Country = currentAddress.Country,
+                    Email = currentAddress.Email,
+                    Phone = currentAddress.Phone
+                };
+                await AddressService.CreateAsync(createDto);
+                await JSRuntime.InvokeVoidAsync("alert", "Address created successfully!");
+            }
+
+            CloseModal();
+            await LoadAddresses();
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error saving address: {ex.Message}");
+        }
+        finally
+        {
+            isSaving = false;
+            StateHasChanged();
+        }
+    }
+
+    private void CloseModal()
+    {
+        showAddEditModal = false;
+        currentAddress = new AddressFormDto();
+        isEditing = false;
+        isSaving = false;
+    }
+
+    private class AddressFormDto
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Street { get; set; } = string.Empty;
+        public string HouseNumber { get; set; } = string.Empty;
+        public string ZipCode { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+    }
+}
