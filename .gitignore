@@ -1,5 +1,6 @@
 #custom
 .vs
+**/*.csproj.user
 
 ## A streamlined .gitignore for modern .NET projects
 ## including temporary files, build results, and
