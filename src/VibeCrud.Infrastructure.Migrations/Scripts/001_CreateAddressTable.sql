@@ -1,6 +1,6 @@
 -- Create Address table
 CREATE TABLE [dbo].[Addresses] (
-    [Id] uniqueidentifier NOT NULL PRIMARY KEY DEFAULT NEWID(),
+    [Id] INT NOT NULL PRIMARY KEY IDENTITY(1, 1),
     [FirstName] nvarchar(100) NOT NULL,
     [LastName] nvarchar(100) NOT NULL,
     [Street] nvarchar(200) NOT NULL,
