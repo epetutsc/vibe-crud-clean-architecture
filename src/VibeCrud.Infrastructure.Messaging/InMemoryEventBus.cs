@@ -1,4 +1,4 @@
-﻿using VibeCrud.Domain.Interfaces;
+using VibeCrud.Domain.Interfaces;
 using System.Collections.Concurrent;
 
 namespace VibeCrud.Infrastructure.Messaging;

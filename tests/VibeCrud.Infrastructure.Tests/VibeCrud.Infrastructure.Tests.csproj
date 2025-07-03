@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\VibeCrud.Infrastructure\VibeCrud.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\VibeCrud.Infrastructure.SqlServer\VibeCrud.Infrastructure.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>

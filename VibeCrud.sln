@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCrud.Infrastructure.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCrud.Web.Tests", "tests\VibeCrud.Web.Tests\VibeCrud.Web.Tests.csproj", "{615C07F7-C960-4E2B-AB22-6C7F8D331831}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCrud.Infrastructure.SqlServer", "src\VibeCrud.Infrastructure.SqlServer\VibeCrud.Infrastructure.SqlServer.csproj", "{1F5490BC-E8DD-464A-8433-F3FEA33E1634}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VibeCrud.Infrastructure.Messaging", "src\VibeCrud.Infrastructure.Messaging\VibeCrud.Infrastructure.Messaging.csproj", "{9EF04FAD-C999-425F-AF52-F10633C27B64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +68,14 @@ Global
 		{615C07F7-C960-4E2B-AB22-6C7F8D331831}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{615C07F7-C960-4E2B-AB22-6C7F8D331831}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{615C07F7-C960-4E2B-AB22-6C7F8D331831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F5490BC-E8DD-464A-8433-F3FEA33E1634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F5490BC-E8DD-464A-8433-F3FEA33E1634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F5490BC-E8DD-464A-8433-F3FEA33E1634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F5490BC-E8DD-464A-8433-F3FEA33E1634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EF04FAD-C999-425F-AF52-F10633C27B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF04FAD-C999-425F-AF52-F10633C27B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EF04FAD-C999-425F-AF52-F10633C27B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF04FAD-C999-425F-AF52-F10633C27B64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A7725474-6324-425B-94F7-60FFDEA9B916} = {76115369-0A03-4D0E-9D5B-932C2315FEB2}
@@ -74,5 +86,7 @@ Global
 		{CE69A5E6-77DA-42B3-929A-8F1794994C5B} = {3F62FA4E-464E-4316-B065-A82C003183D1}
 		{6DD9D26D-6B21-42D2-865F-9B7A5DFAF227} = {3F62FA4E-464E-4316-B065-A82C003183D1}
 		{615C07F7-C960-4E2B-AB22-6C7F8D331831} = {3F62FA4E-464E-4316-B065-A82C003183D1}
+		{1F5490BC-E8DD-464A-8433-F3FEA33E1634} = {76115369-0A03-4D0E-9D5B-932C2315FEB2}
+		{9EF04FAD-C999-425F-AF52-F10633C27B64} = {76115369-0A03-4D0E-9D5B-932C2315FEB2}
 	EndGlobalSection
 EndGlobal

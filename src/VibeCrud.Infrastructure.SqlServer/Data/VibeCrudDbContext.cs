@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using VibeCrud.Domain.Entities;
 
-namespace VibeCrud.Infrastructure.Data;
+namespace VibeCrud.Infrastructure.SqlServer.Data;
 
 public class VibeCrudDbContext : DbContext
 {

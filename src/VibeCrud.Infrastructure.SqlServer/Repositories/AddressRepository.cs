@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using VibeCrud.Domain.Entities;
 using VibeCrud.Domain.Interfaces;
-using VibeCrud.Infrastructure.Data;
+using VibeCrud.Infrastructure.SqlServer.Data;
 
-namespace VibeCrud.Infrastructure.Repositories;
+namespace VibeCrud.Infrastructure.SqlServer.Repositories;
 
 public class AddressRepository : IAddressRepository
 {

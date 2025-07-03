@@ -1,49 +1,77 @@
 # VibeCrud.Infrastructure
 
-This project contains the infrastructure implementations for data access, messaging, and external services.
+# VibeCrud.Infrastructure
+
+This project serves as the main infrastructure orchestration layer that coordinates all infrastructure concerns.
 
 ## Overview
 
-The Infrastructure layer provides concrete implementations of the interfaces defined in the Domain layer. It handles all external concerns such as databases, messaging systems, and third-party services.
+The Infrastructure layer provides a unified entry point for all infrastructure services while maintaining separation of concerns through modular sub-projects. This design allows for better maintainability and easier testing of individual infrastructure components.
+
+## Modular Architecture
+
+### Infrastructure Sub-Projects
+- **VibeCrud.Infrastructure.SqlServer**: SQL Server and Entity Framework Core implementations
+- **VibeCrud.Infrastructure.Messaging**: Event bus and messaging implementations
+
+### Benefits of Modular Design
+- **Single Responsibility**: Each project handles one specific infrastructure concern
+- **Easier Testing**: Components can be tested in isolation
+- **Flexible Deployment**: Individual components can be replaced or upgraded independently
+- **Reduced Dependencies**: Projects only reference what they actually need
 
 ## Structure
 
-### Data Access
-- `VibeCrudDbContext`: Entity Framework Core database context
-- `AddressRepository`: Implementation of `IAddressRepository` using Entity Framework Core
+### Main Infrastructure Project
+- `DependencyInjection`: Orchestrates registration of all infrastructure services
+- Acts as a facade that combines all infrastructure sub-projects
 
-### Messaging
-- `InMemoryEventBus`: In-memory implementation of `IEventBus` for domain events
+### SqlServer Sub-Project (`VibeCrud.Infrastructure.SqlServer`)
+- Entity Framework Core database context
+- Repository implementations
+- Database schema configuration
+- Migration support
 
-### Configuration
-- `DependencyInjection`: Extension methods for registering infrastructure services
+### Messaging Sub-Project (`VibeCrud.Infrastructure.Messaging`)
+- Event bus implementations
+- Domain event handling
+- Pub/Sub messaging patterns
 
 ## Key Features
 
-### Entity Framework Core Integration
-- **Database Context**: Configured for SQL Server with proper entity mappings
-- **Advanced Querying**: Supports filtering, sorting, and pagination for large datasets
-- **Optimized Indexes**: Database indexes for performance optimization
-- **Migrations**: Support for database schema migrations
+### Unified Configuration
+The main infrastructure project provides a single entry point:
 
-### Repository Implementation
-The `AddressRepository` provides:
-- **CRUD Operations**: Create, Read, Update, Delete operations
-- **Soft Delete**: Addresses are marked as deleted rather than physically removed
-- **Advanced Querying**: Complex filtering and sorting capabilities
-- **Pagination**: Efficient pagination for large datasets
-- **Performance Optimized**: Uses appropriate indexes and query patterns
+```csharp
+services.AddInfrastructure(configuration);
+```
 
-### In-Memory Event Bus
-The `InMemoryEventBus` provides:
-- **Publish/Subscribe**: Simple pub/sub pattern for domain events
-- **Thread-Safe**: Uses concurrent collections for thread safety
-- **Type-Safe**: Generic methods ensure type safety
-- **Asynchronous**: Supports async event handling
+This internally calls:
+- `AddSqlServerInfrastructure(configuration)` - Database and repositories
+- `AddMessagingInfrastructure()` - Event bus and messaging
 
-## Database Configuration
+### Modular Dependencies
+Each sub-project only references what it needs:
+- **SqlServer**: Only SQL Server and Entity Framework dependencies
+- **Messaging**: Only messaging-related dependencies
+- **Main**: Orchestrates the sub-projects
 
-### Connection String
+## Dependencies
+
+### Direct Dependencies
+- **VibeCrud.Infrastructure.SqlServer**: SQL Server infrastructure
+- **VibeCrud.Infrastructure.Messaging**: Messaging infrastructure
+- **Microsoft.Extensions.DependencyInjection**: Dependency injection
+
+### Transitive Dependencies
+Through sub-projects:
+- Entity Framework Core (via SqlServer project)
+- SQL Server provider (via SqlServer project)
+- Domain layer (via sub-projects)
+
+## Configuration
+
+### Connection Strings
 ```json
 {
   "ConnectionStrings": {
@@ -52,51 +80,40 @@ The `InMemoryEventBus` provides:
 }
 ```
 
-### Entity Configuration
-The `Address` entity is configured with:
-- Primary key on `Id`
-- Required fields with appropriate lengths
-- Indexes for performance (Email, Name, City, ZipCode)
-- Unique constraint on Email
-- Soft delete filter
+### Service Registration
+```csharp
+// In Program.cs or Startup.cs
+builder.Services.AddInfrastructure(builder.Configuration);
+```
 
-## Dependencies
+This registers all infrastructure services:
+- Database context and repositories
+- Event bus and messaging
+- All required dependencies
 
-- **Microsoft.EntityFrameworkCore.SqlServer**: SQL Server provider for Entity Framework Core
-- **Microsoft.EntityFrameworkCore.Design**: Design-time tools for migrations
-- **VibeCrud.Domain**: Domain interfaces and entities
+## Testing Strategy
 
-## Performance Considerations
+Infrastructure testing is distributed across projects:
+- **VibeCrud.Infrastructure.Tests**: Integration tests for the complete infrastructure
+- Individual sub-projects can have their own focused tests
+- Testcontainers for real database integration testing
 
-### Database Optimization
-- **Indexes**: Strategic indexing for common query patterns
-- **Pagination**: Server-side pagination to handle large datasets
-- **Filtering**: Efficient WHERE clauses with indexed columns
-- **Soft Delete**: Global query filters for soft-deleted entities
+## Future Extensibility
 
-### Query Optimization
-- **IQueryable**: Uses deferred execution for optimal database queries
-- **Projection**: Only selects necessary columns
-- **Async Operations**: All database operations are asynchronous
+The modular design allows for easy addition of new infrastructure concerns:
+- **VibeCrud.Infrastructure.Email**: Email service implementations
+- **VibeCrud.Infrastructure.FileStorage**: File storage implementations
+- **VibeCrud.Infrastructure.Caching**: Caching implementations
+- **VibeCrud.Infrastructure.Logging**: Structured logging implementations
 
-## Testing
-
-Infrastructure components are tested through integration tests:
-- **Testcontainers**: Uses Docker containers for real database testing
-- **Entity Framework Testing**: Tests actual database operations
-- **Performance Testing**: Validates query performance with large datasets
-
-See `VibeCrud.Infrastructure.Tests` for comprehensive integration test examples.
+Each new concern can be added as a separate project with its own dependencies and configuration.
 
 ## Usage
 
-Register infrastructure services in the Web project:
+Simply reference the main Infrastructure project and call:
 
 ```csharp
 builder.Services.AddInfrastructure(builder.Configuration);
 ```
 
-This registers:
-- Entity Framework DbContext
-- Repository implementations
-- Event bus implementation
+The infrastructure layer will handle all the complexity of coordinating the various infrastructure concerns while maintaining clean separation and modularity.

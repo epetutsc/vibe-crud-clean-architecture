@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 using VibeCrud.Domain.Entities;
-using VibeCrud.Infrastructure.Data;
-using VibeCrud.Infrastructure.Repositories;
+using VibeCrud.Infrastructure.SqlServer.Data;
+using VibeCrud.Infrastructure.SqlServer.Repositories;
 
 namespace VibeCrud.Infrastructure.Tests;
 
