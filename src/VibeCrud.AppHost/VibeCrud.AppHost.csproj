@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>aspire-VibeCrud.AppHost-74e89b1d-2a7d-4f6e-9c34-c3e4f8c4d4c3</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.0-preview.5.24201.12" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="8.0.0-preview.5.24201.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VibeCrud.ServiceDefaults\VibeCrud.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\VibeCrud.Web\VibeCrud.Web.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -5,6 +5,9 @@ using VibeCrud.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add service defaults & Aspire components.
+builder.AddServiceDefaults();
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -36,6 +39,9 @@ using (var scope = app.Services.CreateScope())
         app.Logger.LogWarning("No connection string found. Skipping database migrations.");
     }
 }
+
+// Map default endpoints (health checks, etc.)
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
