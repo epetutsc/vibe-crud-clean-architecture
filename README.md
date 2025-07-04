@@ -1,6 +1,6 @@
 # VibeCrud - Clean Architecture Address Management System
 
-A modern address management system built with Clean Architecture principles using .NET 8, Blazor Server, Entity Framework Core, and SQL Server.
+A modern address management system built with Clean Architecture principles using .NET 9, Blazor Server, Entity Framework Core, and SQL Server.
 
 ## Overview
 
@@ -40,7 +40,7 @@ This project demonstrates a complete Clean Architecture implementation for manag
 ## Technology Stack
 
 ### Backend
-- **.NET 8**: Latest version of .NET
+- **.NET 9**: Latest version of .NET
 - **Entity Framework Core**: ORM for data access
 - **SQL Server**: Primary database
 - **Clean Architecture**: Architectural pattern
@@ -113,7 +113,7 @@ VibeCrud/
 ## Getting Started
 
 ### Prerequisites
-- **.NET 8 SDK**
+- **.NET 9 SDK**
 - **SQL Server** or **SQL Server LocalDB** (for standalone development)
 - **Docker** (for integration tests and Aspire orchestration)
 - **.NET Aspire workload** (for simplified local development)
