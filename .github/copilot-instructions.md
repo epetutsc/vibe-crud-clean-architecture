@@ -18,7 +18,10 @@ export PATH="/home/runner/.dotnet:$PATH"
 # Verify .NET 9 installation
 dotnet --version  # Must show 9.0.101 or higher
 
-# Install Aspire workload (required for orchestration)
+# Option A: Install new Aspire CLI (recommended, requires .NET 9.0.302+)
+dotnet tool install -g aspire.cli
+
+# Option B: Install Aspire workload (fallback for older .NET 9 versions)
 dotnet workload install aspire
 ```
 
@@ -44,17 +47,32 @@ dotnet test
 
 ### Running the Application
 
-**Option A: .NET Aspire Orchestration (Recommended)**
+**Option A: .NET Aspire CLI (Recommended)**
 ```bash
-# Run with full orchestration - automatically starts SQL Server container and web app
-dotnet run --project src/VibeCrud.AppHost
+# Run with new Aspire CLI - automatically starts SQL Server container and web app
+aspire run --project src/VibeCrud.AppHost
+
+# Or with watch mode for development
+aspire run --project src/VibeCrud.AppHost --watch
 ```
+- Requires .NET 9.0.302+ and `dotnet tool install -g aspire.cli`
 - Provides Aspire dashboard at http://localhost:15000
 - Automatically configures SQL Server in Docker
 - Handles service discovery and configuration
 - **NOTE**: May have connectivity issues in restricted environments
 
-**Option B: Traditional Development**
+**Option B: .NET Aspire Orchestration (Traditional)**
+```bash
+# Run with full orchestration - automatically starts SQL Server container and web app
+dotnet run --project src/VibeCrud.AppHost
+```
+- Requires `dotnet workload install aspire`
+- Provides Aspire dashboard at http://localhost:15000
+- Automatically configures SQL Server in Docker
+- Handles service discovery and configuration
+- **NOTE**: May have connectivity issues in restricted environments
+
+**Option C: Traditional Development**
 ```bash
 # Requires SQL Server LocalDB or SQL Server instance
 dotnet run --project src/VibeCrud.Web
