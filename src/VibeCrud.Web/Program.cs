@@ -25,7 +25,7 @@ using (var scope = app.Services.CreateScope())
 {
     var migrationRunner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    
+
     if (!string.IsNullOrEmpty(connectionString))
     {
         var migrationSuccess = await migrationRunner.RunMigrationsAsync(connectionString);
