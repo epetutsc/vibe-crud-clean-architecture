@@ -1,24 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Solution>
-  <Folder Name="src">
-    <Project Path="src\VibeCrud.AppHost\VibeCrud.AppHost.csproj" />
-    <Project Path="src\VibeCrud.Domain\VibeCrud.Domain.csproj" />
-    <Project Path="src\VibeCrud.Application\VibeCrud.Application.csproj" />
-    <Project Path="src\VibeCrud.Infrastructure\VibeCrud.Infrastructure.csproj" />
-    <Project Path="src\VibeCrud.Infrastructure.SqlServer\VibeCrud.Infrastructure.SqlServer.csproj" />
-    <Project Path="src\VibeCrud.Infrastructure.Messaging\VibeCrud.Infrastructure.Messaging.csproj" />
-    <Project Path="src\VibeCrud.Infrastructure.Migrations\VibeCrud.Infrastructure.Migrations.csproj" />
-    <Project Path="src\VibeCrud.ServiceDefaults\VibeCrud.ServiceDefaults.csproj" />
-    <Project Path="src\VibeCrud.Web\VibeCrud.Web.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/VibeCrud.AppHost/VibeCrud.AppHost.csproj" />
+    <Project Path="src/VibeCrud.Application/VibeCrud.Application.csproj" />
+    <Project Path="src/VibeCrud.Domain/VibeCrud.Domain.csproj" />
+    <Project Path="src/VibeCrud.Infrastructure.Messaging/VibeCrud.Infrastructure.Messaging.csproj" />
+    <Project Path="src/VibeCrud.Infrastructure.Migrations/VibeCrud.Infrastructure.Migrations.csproj" />
+    <Project Path="src/VibeCrud.Infrastructure.SqlServer/VibeCrud.Infrastructure.SqlServer.csproj" />
+    <Project Path="src/VibeCrud.Infrastructure/VibeCrud.Infrastructure.csproj" />
+    <Project Path="src/VibeCrud.ServiceDefaults/VibeCrud.ServiceDefaults.csproj" />
+    <Project Path="src/VibeCrud.Web/VibeCrud.Web.csproj" />
   </Folder>
-  <Folder Name="tests">
-    <Project Path="tests\VibeCrud.Domain.Tests\VibeCrud.Domain.Tests.csproj" />
-    <Project Path="tests\VibeCrud.Application.Tests\VibeCrud.Application.Tests.csproj" />
-    <Project Path="tests\VibeCrud.Infrastructure.Tests\VibeCrud.Infrastructure.Tests.csproj" />
-    <Project Path="tests\VibeCrud.Web.Tests\VibeCrud.Web.Tests.csproj" />
+  <Folder Name="/tests/">
+    <Project Path="tests/VibeCrud.Application.Tests/VibeCrud.Application.Tests.csproj" />
+    <Project Path="tests/VibeCrud.Domain.Tests/VibeCrud.Domain.Tests.csproj" />
+    <Project Path="tests/VibeCrud.Infrastructure.Tests/VibeCrud.Infrastructure.Tests.csproj" />
+    <Project Path="tests/VibeCrud.Web.Tests/VibeCrud.Web.Tests.csproj" />
   </Folder>
-  <Properties>
-    <Property Name="Configuration|Platform" Value="Debug|Any CPU" />
-    <Property Name="Configuration|Platform" Value="Release|Any CPU" />
-  </Properties>
 </Solution>
