@@ -27,7 +27,7 @@ public class DbUpMigrationRunner : IMigrationRunner
             var upgrader = DeployChanges.To
                 .SqlDatabase(connectionString)
                 .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
-                .LogToAutodetectedLog()
+                .LogToTrace()
                 .Build();
 
             var result = await Task.Run(() => upgrader.PerformUpgrade());
