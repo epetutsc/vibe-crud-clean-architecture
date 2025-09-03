@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VibeCrud.Application\VibeCrud.Application.csproj" />
     <ProjectReference Include="..\VibeCrud.Infrastructure\VibeCrud.Infrastructure.csproj" />
+    <ProjectReference Include="..\VibeCrud.ServiceDefaults\VibeCrud.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
