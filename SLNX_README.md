@@ -34,7 +34,7 @@ The `VibeCrud.slnx` contains the same project structure as `VibeCrud.sln`:
 ## Compatibility
 
 The SLNX format requires newer versions of .NET SDK and Visual Studio. Current compatibility:
-- .NET 8.0+ SDK (some versions may have limited support)
+- .NET 8.0+ SDK
 - Visual Studio 2022 17.8+ (with proper extensions)
 - JetBrains Rider 2023.3+
 
